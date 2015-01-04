@@ -10,6 +10,7 @@ struct cell
        int d;
 };
 
+*function for printing alignment matrix*
 
 void printmatrix (struct cell **matrix, int x, int y, char a[], char b[]) {
 	int i,j;
