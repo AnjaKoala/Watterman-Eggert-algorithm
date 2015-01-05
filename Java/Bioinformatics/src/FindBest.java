@@ -12,44 +12,44 @@ public class FindBest {
 	
 	public List<Integer> BestPath(){
 		int max = 0;
-		int red = 0;
-		int stupac = 0;
-		List<Integer> listaNajboljih = new ArrayList<>();
+		int row1 = 0;
+		int colomn1 = 0;
+		List<Integer> listOfTheBest = new ArrayList<>();
 		for (int col=1; col<matrix.length; col++){	
-			for(int row=1; row< matrix[col].length; row++){				
+			for(int row=1; row< matrix[col].length; row++){	//finding the max value in matrix 	
 				if(matrix[row][col]> max){					
 					max = matrix[row][col];	
-					stupac = col;
-					red = row;
+					colomn1 = col;
+					row1 = row;
 				}
 			}			
 		}
-		listaNajboljih.add(red);
-		listaNajboljih.add(stupac);
+		listOfTheBest.add(row1);
+		listOfTheBest.add(colomn1);
 		bestPath.add(max);
-		while(red-1>0 && stupac-1>0){		
-			max = Math.max(Math.max(matrix[red-1][stupac-1], matrix[red][stupac-1]), matrix[red-1][stupac]);
+		while(row1-1>0 && colomn1-1>0){		//finding the best path in matrix, max value -> up
+			max = Math.max(Math.max(matrix[row1-1][colomn1-1], matrix[row1][colomn1-1]), matrix[row1-1][colomn1]);
 			if(max==0)
 				break;
 			bestPath.add(max);
-			if(max==matrix[red-1][stupac-1]){	
-				stupac-=1;
-				red-=1;		
-				listaNajboljih.add(red);
-				listaNajboljih.add(stupac);	
+			if(max==matrix[row1-1][colomn1-1]){	
+				colomn1-=1;
+				row1-=1;		
+				listOfTheBest.add(row1);
+				listOfTheBest.add(colomn1);	
 			}				
-			if(max==matrix[red][stupac-1]){
-				stupac-=1;
-				listaNajboljih.add(red);
-				listaNajboljih.add(stupac);
+			if(max==matrix[row1][colomn1-1]){
+				colomn1-=1;
+				listOfTheBest.add(row1);
+				listOfTheBest.add(colomn1);
 			}
-			if(max==matrix[red-1][stupac]){
-				red-=1;
-				listaNajboljih.add(red);
-				listaNajboljih.add(stupac);
+			if(max==matrix[row1-1][colomn1]){
+				row1-=1;
+				listOfTheBest.add(row1);
+				listOfTheBest.add(colomn1);
 			}
 		}
 		System.out.println(bestPath);
-		return listaNajboljih;
+		return listOfTheBest;
 	}	
 }
