@@ -9,7 +9,7 @@ public class Main {
 		String redak = "-ACACACTA";
 		String stupac = "-AGCACACA";
 		int[][] gotovaMatrica = new int[redak.length()][stupac.length()];
-		NapraviMatricu napraviMatricu = new NapraviMatricu(stupac, redak);
+		MakeMatrix napraviMatricu = new MakeMatrix(stupac, redak);
 		List<Integer> listaNajboljegPuta = new ArrayList<>();
 		gotovaMatrica = napraviMatricu.make();
 		napraviMatricu.printMatrix(gotovaMatrica);
@@ -17,6 +17,6 @@ public class Main {
 		listaNajboljegPuta=findBest.BestPath();
 		FindSecondBest findSecondBest = new FindSecondBest(gotovaMatrica,stupac,redak);
 		findSecondBest.pripremi(listaNajboljegPuta);
-		napraviMatricu.PrintajSlova(listaNajboljegPuta);
+		napraviMatricu.printLetters(listaNajboljegPuta);
 	}
 }

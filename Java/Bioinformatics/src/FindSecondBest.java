@@ -17,7 +17,7 @@ public class FindSecondBest {
 		
 	}	
 	public void pripremi(List<Integer> listaPuta){
-		NapraviMatricu napraviMatricu = new NapraviMatricu(stupac, redak);
+		MakeMatrix napraviMatricu = new MakeMatrix(stupac, redak);
 		List<Integer> listaNajboljegDrugogPuta = new ArrayList<>();
 		int[][] matrix2 = null;
 		for (int i=0; i<listaPuta.size(); i+=2){	
@@ -27,6 +27,6 @@ public class FindSecondBest {
 		napraviMatricu.printMatrix(matrix2);
 		FindBest findSecondBest = new FindBest(matrix2);
 		listaNajboljegDrugogPuta=findSecondBest.BestPath();
-		napraviMatricu.PrintajSlova(listaNajboljegDrugogPuta);
+		napraviMatricu.printLetters(listaNajboljegDrugogPuta);
 	}	
 }
