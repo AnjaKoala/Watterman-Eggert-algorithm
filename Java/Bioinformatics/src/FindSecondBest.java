@@ -5,28 +5,28 @@ import java.util.List;
 public class FindSecondBest {
 	
 	int[][] matrix = null;
-	int duljinaStupac = 0;
-	int duljinaRedak = 0;
-	String stupac = null;
-	String redak = null;
+	int lenghtColomn = 0;
+	int lenghtRow = 0;
+	String colomn = null;
+	String row = null;
 	
-	public FindSecondBest(int[][] matrix, String stupac, String redak){	
+	public FindSecondBest(int[][] matrix, String colomn, String row){	
 		this.matrix = matrix;
-		this.stupac = stupac;
-		this.redak = redak;
+		this.colomn = colomn;
+		this.row = row;
 		
 	}	
-	public void pripremi(List<Integer> listaPuta){
-		MakeMatrix napraviMatricu = new MakeMatrix(stupac, redak);
-		List<Integer> listaNajboljegDrugogPuta = new ArrayList<>();
+	public void pripremi(List<Integer> path){
+		MakeMatrix makeMatrix = new MakeMatrix(colomn, row); 
+		List<Integer> bestSecondPath = new ArrayList<>();
 		int[][] matrix2 = null;
-		for (int i=0; i<listaPuta.size(); i+=2){	
-			matrix[listaPuta.get(i)][listaPuta.get(i+1)]=0;		
+		for (int i=0; i<path.size(); i+=2){	
+			matrix[path.get(i)][path.get(i+1)]=0;		
 		}
-		matrix2=napraviMatricu.makeSecond(matrix,listaPuta.get(listaPuta.size()-2), listaPuta.get(listaPuta.size()-1));
-		napraviMatricu.printMatrix(matrix2);
-		FindBest findSecondBest = new FindBest(matrix2);
-		listaNajboljegDrugogPuta=findSecondBest.BestPath();
-		napraviMatricu.printLetters(listaNajboljegDrugogPuta);
+		matrix2=makeMatrix.makeSecond(matrix,path.get(path.size()-2), path.get(path.size()-1)); //recalculating the matrix
+		makeMatrix.printMatrix(matrix2);
+		FindBest findSecondBest = new FindBest(matrix2); //finding the path for the second matrix
+		bestSecondPath=findSecondBest.BestPath();
+		makeMatrix.printLetters(bestSecondPath);
 	}	
 }

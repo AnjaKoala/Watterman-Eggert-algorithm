@@ -5,18 +5,18 @@ import java.util.List;
 public class Main {
 
 	public static void main(String[] args) {
-
-		String redak = "-ACACACTA";
-		String stupac = "-AGCACACA";
-		int[][] gotovaMatrica = new int[redak.length()][stupac.length()];
-		MakeMatrix napraviMatricu = new MakeMatrix(stupac, redak);
-		List<Integer> listaNajboljegPuta = new ArrayList<>();
-		gotovaMatrica = napraviMatricu.make();
-		napraviMatricu.printMatrix(gotovaMatrica);
-		FindBest findBest = new FindBest(gotovaMatrica);
-		listaNajboljegPuta=findBest.BestPath();
-		FindSecondBest findSecondBest = new FindSecondBest(gotovaMatrica,stupac,redak);
-		findSecondBest.pripremi(listaNajboljegPuta);
-		napraviMatricu.printLetters(listaNajboljegPuta);
+		//at the beginning of every string there has to be a minus sign for program to work correctly!!!
+		String row = "-ACACACTA";
+		String colomn = "-AGCACACA";
+		int[][] doneMatrix = new int[row.length()][colomn.length()];
+		MakeMatrix makeMatrix = new MakeMatrix(colomn, row);
+		List<Integer> bestPath = new ArrayList<>();
+		doneMatrix = makeMatrix.make();
+		makeMatrix.printMatrix(doneMatrix);
+		FindBest findBest = new FindBest(doneMatrix);
+		bestPath=findBest.BestPath();
+		FindSecondBest findSecondBest = new FindSecondBest(doneMatrix,colomn,row);
+		findSecondBest.pripremi(bestPath);
+		makeMatrix.printLetters(bestPath);
 	}
 }
