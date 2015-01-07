@@ -3,6 +3,7 @@
 #include <conio.h>
 #include <string.h>
 
+
 struct cell
 {
        int value;
@@ -10,8 +11,8 @@ struct cell
        int d;
 };
 
-*function for printing alignment matrix*
 
+/*function for printing alignment matrix*/
 void printmatrix (struct cell **matrix, int x, int y, char a[], char b[]) {
 	int i,j;
 	
@@ -37,7 +38,7 @@ void printmatrix (struct cell **matrix, int x, int y, char a[], char b[]) {
 }
 
 
-
+/*function for calculating the value and direction of a cell in alignment matrix*/
 struct cell calculate_cell (int a, int b, int c, int match) {
     struct cell calculated_cell;
     int i=0;
@@ -76,7 +77,7 @@ struct cell calculate_cell (int a, int b, int c, int match) {
     return calculated_cell; }
 
 
-
+/*function for calculating the alignment matrix*/
 void compare (char x[], char y[], struct cell **matrix, int m, int n) {
 
 	int i,j;
@@ -106,7 +107,7 @@ void compare (char x[], char y[], struct cell **matrix, int m, int n) {
 	
 	
 
-
+/*function for finding the best alignment cells in the matrix*/
 void find_path (char x[], char y[], struct cell **matrix, int m, int n) {
 	int i,j;
 	int imax,jmax;
