@@ -12,6 +12,69 @@ struct cell
 };
 
 
+/*
+/*function for reading one sequence from a file*/
+void readfile() {
+     int c;
+   int seqcounter=0;
+   int i=0;
+   int descrstar=0;
+   int descrend=0;
+   
+   char *sequence;
+   
+   FILE *file;
+   file = fopen("test.txt", "r");
+   
+   if (file) {
+   while ((c = fgetc(file)) != EOF) {
+         if (c=='>') descrstar=1;
+         if (c=='\n') descrend=1;
+         if ((descrstar==1)&&(descrend==1)) {
+                                            seqcounter++; }}}
+         
+         
+   printf("\n \n");
+   
+   sequence = (char *)malloc(seqcounter * sizeof(char)); 
+   
+    for (i = 0; i < seqcounter; i++) {
+        sequence[i]='-';}
+   
+  rewind(file);
+     
+  i=0;   
+  descrstar=0;
+  descrend=0;
+     
+  if (file) {
+   while ((c = fgetc(file)) != EOF) {
+         if (c=='>') descrstar=1;
+         if (c=='\n') descrend=1;
+         if ((descrstar==1)&&(descrend==0)) { putchar(c);}
+         if ((descrstar==1)&&(descrend==1)) {
+                                            putchar(c);
+                                            sequence[i]=c;
+                                            i++; }}}   
+     
+   
+    
+  
+        
+    fclose(file);
+    
+    printf("\n Counter=%d \n",seqcounter);
+    
+    for (i = 0; i < seqcounter; i++) {
+        putchar(sequence[i]);}
+    
+    free(sequence);
+    
+    printf("\n \n");
+    system("PAUSE");
+}
+*/
+
 /*function for printing alignment matrix*/
 void printmatrix (struct cell **matrix, int x, int y, char a[], char b[]) {
 	int i,j;
