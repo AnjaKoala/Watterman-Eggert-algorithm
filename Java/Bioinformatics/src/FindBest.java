@@ -15,8 +15,8 @@ public class FindBest {
 		int row1 = 0;
 		int colomn1 = 0;
 		List<Integer> listOfTheBest = new ArrayList<>();
-		for (int col=1; col<matrix.length; col++){	
-			for(int row=1; row< matrix[col].length; row++){	//finding the max value in matrix 	
+		for(int row=1; row< matrix.length; row++){
+			for (int col=1; col<matrix[row].length; col++){//finding the max value in matrix 	
 				if(matrix[row][col]> max){					
 					max = matrix[row][col];	
 					colomn1 = col;
