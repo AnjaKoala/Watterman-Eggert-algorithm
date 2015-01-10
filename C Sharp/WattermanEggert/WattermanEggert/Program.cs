@@ -27,7 +27,7 @@ namespace WattermanEggert
             string column = args[1];
 
             /** Should the debug info be printed? */
-            bool debug = args.Length > 2 && args[3].ToLower() == "debug";
+            bool debug = args.Length > 2 && args[2].ToLower() == "debug";
             
             /** Uses two input strings to create the Smith&Waterman matrix based on the costs and rewards defined earlier. */
             int[,] matrix = CreateMatrix(row, column);
@@ -125,7 +125,7 @@ namespace WattermanEggert
             Tuple<int, int> max = choices[0];
             foreach (var choice in choices)
             {
-                if (matrix[choice.Item1, choice.Item2] >= matrix[max.Item1, max.Item2])
+                if (matrix[choice.Item1, choice.Item2] > matrix[max.Item1, max.Item2])
                 {
                     max = choice;
                 }
@@ -142,24 +142,20 @@ namespace WattermanEggert
         static List<Tuple<int, int>> FindBestPath(int[,] matrix)
         {
             var p = FindMax(matrix);
-            var path = new List<Tuple<int, int>> {p};
+            var path = new List<Tuple<int, int>>();
 
             int[] dy = { -1, -1, 0 };
             int[] dx = { 0, -1, -1 };
             
             var choices = new Tuple<int, int>[3];
-            while (true)
+            while (p.Item1 > 0 && p.Item2 > 0 && matrix[p.Item1, p.Item2] != 0)
             {
+                path.Add(p);
                 for (int i = 0; i < 3; i++)
                 {
                     choices[i] = new Tuple<int, int>(p.Item1 + dx[i], p.Item2 + dy[i]);
                 }
                 p = ArgMax(choices, matrix);
-                if (matrix[p.Item1, p.Item2] == 0)
-                {
-                    break;
-                }
-                path.Add(p);
             }
             
             return path;

@@ -1,6 +1,6 @@
 C:\Users\ikatun\Dropbox\faks\5. godina\Bioinformatika\projekt\Watterman-Eggert-algorithm\C Sharp\WattermanEggert\WattermanEggert\bin\Debug\WattermanEggert.exe.config
-C:\Users\ikatun\Dropbox\faks\5. godina\Bioinformatika\projekt\Watterman-Eggert-algorithm\C Sharp\WattermanEggert\WattermanEggert\obj\Debug\WattermanEggert.csprojResolveAssemblyReference.cache
 C:\Users\ikatun\Dropbox\faks\5. godina\Bioinformatika\projekt\Watterman-Eggert-algorithm\C Sharp\WattermanEggert\WattermanEggert\bin\Debug\WattermanEggert.exe
 C:\Users\ikatun\Dropbox\faks\5. godina\Bioinformatika\projekt\Watterman-Eggert-algorithm\C Sharp\WattermanEggert\WattermanEggert\bin\Debug\WattermanEggert.pdb
+C:\Users\ikatun\Dropbox\faks\5. godina\Bioinformatika\projekt\Watterman-Eggert-algorithm\C Sharp\WattermanEggert\WattermanEggert\obj\Debug\WattermanEggert.csprojResolveAssemblyReference.cache
 C:\Users\ikatun\Dropbox\faks\5. godina\Bioinformatika\projekt\Watterman-Eggert-algorithm\C Sharp\WattermanEggert\WattermanEggert\obj\Debug\WattermanEggert.exe
 C:\Users\ikatun\Dropbox\faks\5. godina\Bioinformatika\projekt\Watterman-Eggert-algorithm\C Sharp\WattermanEggert\WattermanEggert\obj\Debug\WattermanEggert.pdb
