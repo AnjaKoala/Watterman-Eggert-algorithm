@@ -2,16 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace WattermanEggert
 {
     /**
      * Implementation of Watterman-Eggert Algorithm for second best string alignment
+     * 
+     * The program takes three inputs:
+     *    first string to be aligned
+     *    second string to be aligned
+     *    debug value: if third argument is DEBUG, the program will output H and H* matrices with the matching best pathts through them
      **/ 
     class Program
     {
-        /*  */
+        /* Amount of hate we put into mismatch :) */
         private static int _matchReward = 10;
         private static int _mismatchCost = -9;
         private static int _insertionCost = -20;
@@ -21,15 +25,23 @@ namespace WattermanEggert
         {
             string row = args[0];
             string column = args[1];
+
+            /** Should the debug info be printed? */
             bool debug = args.Length > 2 && args[3].ToLower() == "debug";
+            
+            /** Uses two input strings to create the Smith&Waterman matrix based on the costs and rewards defined earlier. */
             int[,] matrix = CreateMatrix(row, column);
             if (debug) PrintMatrix(matrix);
+
+            /** Store the bast path as list of int pairs which represent the coordinates within the matrix. */
             var bestPath = FindBestPath(matrix);
 
             if (debug) PrintPath(bestPath, matrix);
+            /** Sets all matrix' values along the path to zero hence computing the H* matrix. (Asterisks stands for "slightly modified"). */
             ResetValues(matrix, bestPath);
             if (debug) PrintMatrix(matrix);
 
+            /** Uses the H* matrix as basis for calculating the new "best" path. */
             var secondBestPath = FindBestPath(matrix);
             if (debug)
             {
@@ -38,12 +50,16 @@ namespace WattermanEggert
                 Console.WriteLine(AlignString(row, bestPath.Select(t => t.Item2).ToList()));
             }
 
+            /** Align column nucleotides based on the first coordinates of path pairs. */
             string rowAligned = AlignString(column, secondBestPath.Select(t => t.Item1).ToList());
             Console.WriteLine(rowAligned);
+
+            /** Align row nucleotides based on the first coordinates of path pairs. */
             string columnAligned = AlignString(row, secondBestPath.Select(t => t.Item2).ToList());
             Console.WriteLine(columnAligned);
         }
 
+        /** Computes the Smith&Waterman matrix used for string comparison. Also adds one null row and one null column for the sake of implementation simplicity. */
         static int[,] CreateMatrix(string rowString, string columnString)
         {
             var matrix = new int[columnString.Length + 1, rowString.Length + 1];
@@ -84,6 +100,7 @@ namespace WattermanEggert
             }
         }
 
+        /** Returns the coordinates of greatest number within a integer matrix. */
         static Tuple<int, int> FindMax(int[,] matrix)
         {
             var max = new Tuple<int, int>(0, 0);
@@ -102,6 +119,7 @@ namespace WattermanEggert
             return max;
         }
 
+        /** Takes array of int pairs which represent coordinates within the matrix. Returns the point which points to greatest number within the matrix. */
         static Tuple<int, int> ArgMax(Tuple<int, int>[] choices, int[,] matrix)
         {
             Tuple<int, int> max = choices[0];
@@ -116,6 +134,11 @@ namespace WattermanEggert
             return max;
         }
 
+        /** After finding the coordinates of the greatest matrix' element, the best path is computed. 
+         *  The best path is computed by repeatedly taking the greatest element of the three
+         *  in the upper-left corner of the starting one.
+         *  For further references, see Smith&Waterson algorithm. 
+         **/
         static List<Tuple<int, int>> FindBestPath(int[,] matrix)
         {
             var p = FindMax(matrix);
@@ -142,6 +165,7 @@ namespace WattermanEggert
             return path;
         }
 
+        /** All values in matrix at coordinates indicated by elements of path are set to zero. */
         static void ResetValues(int[,] matrix, List<Tuple<int, int>>  path)
         {
             foreach (var p in path)
@@ -150,6 +174,11 @@ namespace WattermanEggert
             }
         }
 
+        /** Rearanges the string by using the indices in path.
+         *  Indices must be sorted in descending order.
+         *  If indices are repeated, a single dash character - is
+         *  inserted for every repetition.
+         **/
         static string AlignString(string a, List<int> path)
         {
             int prev = -1;
@@ -171,6 +200,7 @@ namespace WattermanEggert
             return new string(stringAsCharArray);
         }
 
+        /** Prints values of matrix along the given path. */
         static void PrintPath(List<Tuple<int, int>> path, int[,] matrix)
         {
             Console.WriteLine(string.Join(", ", path.Select(p => matrix[p.Item1, p.Item2])));
