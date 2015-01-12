@@ -187,6 +187,7 @@ namespace WattermanEggert
                     choices[i] = new Tuple<int, int>(p.Item1 + dx[i], p.Item2 + dy[i]);
                 }
                 p = ArgMax(choices, matrix);
+                int v = matrix[p.Item1, p.Item2];
             }
             
             return path;
