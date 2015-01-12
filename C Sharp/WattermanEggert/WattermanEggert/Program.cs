@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
+
 
 namespace WattermanEggert
 {
@@ -23,8 +25,8 @@ namespace WattermanEggert
 
         static void Main(string[] args)
         {
-            string row = args[0];
-            string column = args[1];
+            string row = File.ReadAllText(args[0]);
+            string column = File.ReadAllText(args[1]);
 
             /** Should the debug info be printed? */
             bool debug = args.Length > 2 && args[2].ToLower() == "debug";
@@ -38,16 +40,22 @@ namespace WattermanEggert
 
             if (debug) PrintPath(bestPath, matrix);
             /** Sets all matrix' values along the path to zero hence computing the H* matrix. (Asterisks stands for "slightly modified"). */
-            ResetValues(matrix, bestPath);
-            if (debug) PrintMatrix(matrix);
+
+            if (debug)
+            {
+                Console.WriteLine(AlignString(column, bestPath.Select(t => t.Item1).ToList()));
+                Console.WriteLine(AlignString(row, bestPath.Select(t => t.Item2).ToList()));
+            }
 
             /** Uses the H* matrix as basis for calculating the new "best" path. */
+            ResetValues(matrix, bestPath);
+            var start = bestPath.Last();
+            RecomputeMatrix(matrix, start.Item1, start.Item2, row, column);
             var secondBestPath = FindBestPath(matrix);
             if (debug)
             {
+                PrintMatrix(matrix);
                 PrintPath(secondBestPath, matrix);
-                Console.WriteLine(AlignString(column, bestPath.Select(t => t.Item1).ToList()));
-                Console.WriteLine(AlignString(row, bestPath.Select(t => t.Item2).ToList()));
             }
 
             /** Align column nucleotides based on the first coordinates of path pairs. */
@@ -80,6 +88,29 @@ namespace WattermanEggert
             }
 
             return matrix;
+        }
+
+        /** Recomputes the Smith&Watterson (best) matrix into Smith&Eggert (second best) matrix used for string comparison.  */
+        static void RecomputeMatrix(int[,] matrix, int startRow, int startColumn, string rowString, string columnString)
+        {
+            for (int r = startRow; r < matrix.GetLength(0); r++)
+            {
+                for (int c = startColumn; c < matrix.GetLength(1); c++)
+                {
+                    if (matrix[r, c] > 0)
+                    {
+                        if (columnString[r - 1] == rowString[c - 1])
+                        {
+                            matrix[r, c] = _matchReward + matrix[r - 1, c - 1];
+                        }
+                        else
+                        {
+                            matrix[r, c] = Max4(matrix[r, c - 1] + _deletionCost, matrix[r - 1, c] + _insertionCost,
+                                matrix[r - 1, c - 1] + _mismatchCost, 0);
+                        }
+                    }
+                }
+            }
         }
 
         static int Max4(int a, int b, int c, int d)
@@ -144,8 +175,8 @@ namespace WattermanEggert
             var p = FindMax(matrix);
             var path = new List<Tuple<int, int>>();
 
-            int[] dy = { -1, -1, 0 };
-            int[] dx = { 0, -1, -1 };
+            int[] dy = {-1, -1, 0};
+            int[] dx = {-1, 0, -1};
             
             var choices = new Tuple<int, int>[3];
             while (p.Item1 > 0 && p.Item2 > 0 && matrix[p.Item1, p.Item2] != 0)
@@ -156,6 +187,7 @@ namespace WattermanEggert
                     choices[i] = new Tuple<int, int>(p.Item1 + dx[i], p.Item2 + dy[i]);
                 }
                 p = ArgMax(choices, matrix);
+                int v = matrix[p.Item1, p.Item2];
             }
             
             return path;
