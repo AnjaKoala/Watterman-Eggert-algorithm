@@ -1,8 +1,17 @@
-#include<stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
 #include <string.h>
 
+#define MATCH 1
+#define MISMATCH -1
+#define INDEL -2
+
+struct alignment
+{
+       char symbol1;
+       char symbol2;
+};
 
 struct cell
 {
@@ -11,20 +20,13 @@ struct cell
        int d;
 };
 
-
-/*
-/*function for reading one sequence from a file*/
-void readfile() {
-     int c;
+/*function for counting input sequence length*/
+int readcounter (FILE *file) {
+   int c;
    int seqcounter=0;
    int i=0;
    int descrstar=0;
    int descrend=0;
-   
-   char *sequence;
-   
-   FILE *file;
-   file = fopen("test.txt", "r");
    
    if (file) {
    while ((c = fgetc(file)) != EOF) {
@@ -32,20 +34,18 @@ void readfile() {
          if (c=='\n') descrend=1;
          if ((descrstar==1)&&(descrend==1)) {
                                             seqcounter++; }}}
-         
-         
-   printf("\n \n");
+                                            
+   return seqcounter;                                
    
-   sequence = (char *)malloc(seqcounter * sizeof(char)); 
-   
-    for (i = 0; i < seqcounter; i++) {
-        sequence[i]='-';}
-   
-  rewind(file);
-     
-  i=0;   
-  descrstar=0;
-  descrend=0;
+}
+
+/*function for retreaving sequence from files*/
+void createsequence(FILE *file, char *sequencearray) {
+   int c;
+   int seqcounter=0;
+   int i=0;
+   int descrstar=0;
+   int descrend=0;
      
   if (file) {
    while ((c = fgetc(file)) != EOF) {
@@ -54,26 +54,13 @@ void readfile() {
          if ((descrstar==1)&&(descrend==0)) { putchar(c);}
          if ((descrstar==1)&&(descrend==1)) {
                                             putchar(c);
-                                            sequence[i]=c;
-                                            i++; }}}   
+                                            sequencearray[i]=c;
+                                            i++; }}}  
      
-   
-    
-  
-        
-    fclose(file);
-    
-    printf("\n Counter=%d \n",seqcounter);
-    
-    for (i = 0; i < seqcounter; i++) {
-        putchar(sequence[i]);}
-    
-    free(sequence);
-    
-    printf("\n \n");
-    system("PAUSE");
-}
-*/
+     }
+
+
+
 
 /*function for printing alignment matrix*/
 void printmatrix (struct cell **matrix, int x, int y, char a[], char b[]) {
@@ -108,12 +95,10 @@ struct cell calculate_cell (int a, int b, int c, int match) {
     int m[]={0,0,0};
     int result_value=0;
     
-    int indel=-2;
-
     
     m[0]=a+match;
-    m[1]=b+indel;
-    m[2]=c+indel;
+    m[1]=b+INDEL;
+    m[2]=c+INDEL;
     
     result_value=m[0];
     
@@ -157,8 +142,8 @@ void compare (char x[], char y[], struct cell **matrix, int m, int n) {
           c=matrix[i][j-1].value;
           
           if (matrix[i][j].value==-1) {
-          if (xpom==ypom) { matrix[i][j]=calculate_cell(a,b,c,1); }
-          else {matrix[i][j]=calculate_cell(a,b,c,-1);}
+          if (xpom==ypom) { matrix[i][j]=calculate_cell(a,b,c,MATCH); }
+          else {matrix[i][j]=calculate_cell(a,b,c,MISMATCH);}
           }
           
                           
@@ -192,6 +177,8 @@ void find_path (char x[], char y[], struct cell **matrix, int m, int n) {
                    }
                   }
               }
+	
+	printf ("\n , i:%d, j:%d \n", i,j);
 	
 	printf ("\nMaximum value cell:\n");
 	printf ("V:%d , x:%d, y:%d", pom, imax,jmax);
@@ -228,6 +215,8 @@ void find_path (char x[], char y[], struct cell **matrix, int m, int n) {
     int c;
     c=z;
     
+    int alignmentlength=0;
+    
     while (currentcell.value!=0) {
                 
                 currentcell=matrix[i][j];
@@ -251,13 +240,14 @@ void find_path (char x[], char y[], struct cell **matrix, int m, int n) {
                                               j--;}
                 
                 z--;
-        
+                alignmentlength++;
                 }
           
           imin=i; jmin=j;
           
           printf ("\nMinimum value cell:\n");
 	      printf ("V:%d , x:%d, y:%d", matrix[imin][jmin].value, imin,jmin);
+	      printf ("\nAlignment length: %d", alignmentlength);
 	      printf("\n");
           
           printf("\n");
@@ -288,27 +278,76 @@ void find_path (char x[], char y[], struct cell **matrix, int m, int n) {
 main()
 {
 	  
+	  int seqcounter=0;
+      int seqcounter2=0;
+      int i=0;
+      int j=0;
+	  
 	  int m;
 	  int n; 
 	
-      char c1[]="AGTCCGAGGGCTATTCTCTACTGAAC";
-      char c2[]="CCAATCTACTGGCTACTTTGCAGTAC";
+	  char *c1;
+      char *c2;
+   
+      FILE *file;
+      file = fopen("test1.txt", "r");
+   
+      FILE *file2;
+      file2 = fopen("test2.txt", "r");
+	
+	  seqcounter=readcounter(file);
+      seqcounter2=readcounter(file2);
+         
+      printf("\n \n");
+   
+      c1 = (char *)malloc(seqcounter * sizeof(char)); 
+   
+      for (i = 0; i < seqcounter; i++) {
+        c1[i]='-';}
+  
+  
+     c2 = (char *)malloc(seqcounter * sizeof(char)); 
+   
+     for (i = 0; i < seqcounter2; i++) {
+        c2[i]='-';}
+	
+	rewind(file);
+    rewind(file2);
+  
+    createsequence(file, c1); 
+  
+    printf("\n \n");
+  
+    createsequence(file2, c2); 
+     
+ 
+    fclose(file);
+    fclose(file2);
+    
+    printf("\n Counter1=%d \n",seqcounter);
+    printf("\n Counter2=%d \n",seqcounter2);
+    
+    for (i = 0; i < seqcounter; i++) {
+        putchar(c1[i]);}
+    
+    printf("\n");
+        
+    for (i = 0; i < seqcounter2; i++) {
+        putchar(c2[i]);}
       
       
-      m=strlen(c1);
-      n=strlen(c2);
+      m=seqcounter;
+      n=seqcounter2;
       
-      printf("\n  %d %d \n", m, n);
+      printf("\n  m=%d n=%d \n", m, n);
       
       /* creating matrix H*/
       
-      int i;
-      int j;
       
       
       struct cell** table1;  
       table1 = (struct cell**) malloc((m+1)*sizeof(struct cell*));  
-        for (int i = 0; i < (m+1); i++)  {
+        for (i = 0; i < (m+1); i++)  {
 		table1[i] = (struct cell*) malloc((n+1)*sizeof(struct cell)); }
       
       for (i = 0; i < m+1; i++) {
@@ -326,7 +365,7 @@ main()
       
       
 	  /* printing the zero matrix*/
-	  printmatrix (table1, m+1, n+1, c1, c2 );
+	  /*printmatrix (table1, m+1, n+1, c1, c2 );*/
       
       printf("\n \n");
       
@@ -334,7 +373,7 @@ main()
       compare(c1,c2,table1,m+1,n+1);
       
       /* printing the matrix*/
-      printmatrix (table1, m+1, n+1, c1, c2 );
+      /*printmatrix (table1, m+1, n+1, c1, c2 );*/
     
       /*calculating the path */
       find_path(c1,c2,table1,m,n);
@@ -355,12 +394,13 @@ main()
               	table2[i][j].d=0;
               }
           }
+      
           
-      printmatrix (table2, m+1, n+1, c1, c2 );    
+      /*printmatrix (table2, m+1, n+1, c1, c2 );*/    
     
       compare(c1,c2,table2,m+1,n+1);
       
-      printmatrix (table2, m+1, n+1, c1, c2 ); 
+      /*printmatrix (table2, m+1, n+1, c1, c2 ); */
       
       printf("\n \n");
       
@@ -371,6 +411,8 @@ main()
       
        
     
+free(c1);
+free(c2);
     
 free(table1);
 free(table2);    

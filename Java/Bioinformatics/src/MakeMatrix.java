@@ -25,17 +25,17 @@ public class MakeMatrix {
 		// variable hit, is telling us is its a match in two strings or not
 		// column1 and row1 are telling us where to begin recalculate the matrix for the second time..
 		//we don't have to recalculate the whole matrix
-		for (int i=column1; i<arrayColumn.length(); i++){	
-			for(int j=row1; j< arrayRow.length(); j++){	
-				if(matrix2[i][j]>0){
-					matrix2[i][j] = 1;
-					if(arrayColumn.charAt(j)==arrayRow.charAt(i)){
+		for(int j=row1; j< arrayRow.length(); j++){	
+			for (int i=column1; i<arrayColumn.length(); i++){	
+				if(matrix2[j][i]>0){
+					matrix2[j][i] = 1;
+					if(arrayColumn.charAt(i)==arrayRow.charAt(j)){
 						hit = 1;
-						matrix2[i][j]= s(matrix2[i][j-1],matrix2[i-1][j],matrix2[i-1][j-1], hit); //checking for the best value
+						matrix2[j][i]= s(matrix2[j][i-1],matrix2[j-1][i],matrix2[j-1][i-1], hit); //checking for the best value
 					}
 					else {
 						hit = 0;
-						matrix2[i][j]= s(matrix2[i][j-1],matrix2[i-1][j],matrix2[i-1][j-1], hit);
+						matrix2[j][i]= s(matrix2[j][i-1],matrix2[j-1][i],matrix2[j-1][i-1], hit);
 					}
 				}
 			}			
@@ -81,9 +81,9 @@ public class MakeMatrix {
 	
 	public void printMatrix(int[][] doneMatrix){
 		
-		for (int row = 0; row < doneMatrix.length; row++) {
-	        for (int col = 0; col <doneMatrix[row].length; col++) {
-	            System.out.printf("%4d", doneMatrix[col][row]);
+		for (int row = 0; row < arrayRow.length(); row++) {
+	        for (int col = 0; col <arrayColumn.length(); col++) {
+	            System.out.printf("%4d", doneMatrix[row][col]);
 	        }
 	        System.out.println();
 	    }	
@@ -115,10 +115,12 @@ public class MakeMatrix {
 				row.add(empty); //adding an empty sign
 			}		
 		}
-		for(int i=row.size()-1;i>=0;i--)
-			realRow.add(row.get(i)); //adding a string, which will print in the end
-		for(int i=colomn.size()-1;i>=0;i--)
-			realColomn.add(colomn.get(i));  //adding a string, which will print in the end
+		for(int i=row.size()-1;i>=0;i--){
+			realRow.add(row.get(i));
+		}//adding a string, which will print in the end
+		for(int i=colomn.size()-1;i>=0;i--){
+			realColomn.add(colomn.get(i));
+		}//adding a string, which will print in the end
 		System.out.println(realRow);
 		System.out.println(realColomn);
 	}
