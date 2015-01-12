@@ -25,8 +25,8 @@ namespace WattermanEggert
 
         static void Main(string[] args)
         {
-            string row = File.ReadAllText(args[0]).Replace("<", "").Replace("\n", "");
-            string column = File.ReadAllText(args[1]).Replace("<", "").Replace("\n", "");
+            string column = File.ReadAllText(args[0]).Replace("<", "").Replace("\n", "").Replace("\r", "");
+            string row = File.ReadAllText(args[1]).Replace("<", "").Replace("\n", "").Replace("\r", "");
 
             /** Should the debug info be printed? */
             bool debug = args.Length > 2 && args[2].ToLower() == "debug";
@@ -59,24 +59,24 @@ namespace WattermanEggert
             }
 
             /** Align column nucleotides based on the first coordinates of path pairs. */
-            string rowAligned = AlignString(column, secondBestPath.Select(t => t.Item1).ToList());
+            string rowAligned = AlignString(row, secondBestPath.Select(t => t.Item1).ToList());
             Console.WriteLine(rowAligned);
 
             /** Align row nucleotides based on the first coordinates of path pairs. */
-            string columnAligned = AlignString(row, secondBestPath.Select(t => t.Item2).ToList());
+            string columnAligned = AlignString(column, secondBestPath.Select(t => t.Item2).ToList());
             Console.WriteLine(columnAligned);
         }
 
         /** Computes the Smith&Waterman matrix used for string comparison. Also adds one null row and one null column for the sake of implementation simplicity. */
         static int[,] CreateMatrix(string rowString, string columnString)
         {
-            var matrix = new int[columnString.Length + 1, rowString.Length + 1];
+            var matrix = new int[rowString.Length + 1, columnString.Length + 1];
 
             for (int r = 1; r <= rowString.Length; r++)
             {
                 for (int c = 1; c <= columnString.Length; c++)
                 {
-                    if (columnString[r - 1] == rowString[c - 1])
+                    if (rowString[r - 1] == columnString[c - 1])
                     {
                         matrix[r, c] = _matchReward + matrix[r - 1, c - 1];
                     }
@@ -99,7 +99,7 @@ namespace WattermanEggert
                 {
                     if (matrix[r, c] > 0)
                     {
-                        if (columnString[r - 1] == rowString[c - 1])
+                        if (rowString[r - 1] == columnString[c - 1])
                         {
                             matrix[r, c] = _matchReward + matrix[r - 1, c - 1];
                         }
