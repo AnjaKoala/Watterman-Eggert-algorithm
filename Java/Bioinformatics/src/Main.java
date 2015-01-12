@@ -6,8 +6,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		//at the beginning of every string there has to be a minus sign for program to work correctly!!!
-	//	String row = "-AGTCCGAGGGCTACTCTACTGAAC";
-	//	String colomn = "-GAGGGCTT";
+	//	String colomn = "-AGTCCGAGGGCTACTCTACTGAAC";
+	//	String row = "-CCAATCTACTACTGCTTGCAGTAC";
 		String row= args[0];
 		String colomn =args[1];
 		int[][] doneMatrix = new int[row.length()][colomn.length()];
