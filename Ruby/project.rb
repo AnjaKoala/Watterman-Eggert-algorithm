@@ -75,6 +75,7 @@ def findBestPath(matrix)
     return path
 end
 
+# Prints path and corresponding matrix values.
 def printPath(path, matrix)
     puts "Printing best path"
     for coordinate in path
@@ -109,6 +110,16 @@ def alignString(string, path)
     return alignedString
 end
 
+# Sets all values at coordinates given by bestPath to zero.
+def resetValues(matrix, path)
+    for p in path
+        array = *matrix
+        array[p[0]][p[1]] = 0
+        matrix = Matrix[*array]
+    end
+    return matrix
+end
+
 puts "START"
 puts "---------------------------------------------"
 
@@ -123,6 +134,11 @@ matrix = createMatrix(row, column)
 bestPath = findBestPath(matrix)
 
 printPath(bestPath, matrix)
+
+# Resets values in best path to zero.
+matrix = resetValues(matrix, bestPath)
+
+prettyPrint(matrix)
 
 # Aligning substrings
 rowPath = []
