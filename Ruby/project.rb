@@ -1,4 +1,5 @@
-# evo ruby
+# Ruby implementation of Smith&Waterman algorithm. 
+# Program takes two arguments - paths to files containing strings on which best subsequence alignment needs to be calculated.
 
 require 'matrix'
 
@@ -26,7 +27,7 @@ def createMatrix(row, column)
             end
         end
     end
-    
+
     return matrix
 end
 
@@ -74,6 +75,15 @@ def findBestPath(matrix)
     return path
 end
 
+def printPath(path, matrix)
+    puts "Printing best path"
+    for coordinate in path
+        x = coordinate[0]
+        y = coordinate[1]
+        puts x.to_s + " " + y.to_s + ": " + matrix[x, y].to_s
+    end
+end
+
 # Prints matrix on the screen, beautifully.
 def prettyPrint(matrix) 
     for i in 0..matrix.row_size - 1 
@@ -82,6 +92,21 @@ def prettyPrint(matrix)
         end
         puts 
     end
+end
+
+# Returnes aligned string from given path (list of indices).
+def alignString(string, path)
+    prev = -1
+    alignedString = ""
+    for p in path
+        if p != prev
+            alignedString += string[p - 1]
+            prev = p
+        else
+            alignedString += "-"
+        end
+    end
+    return alignedString
 end
 
 puts "START"
@@ -97,6 +122,15 @@ matrix = createMatrix(row, column)
 
 bestPath = findBestPath(matrix)
 
-print bestPath
+printPath(bestPath, matrix)
+
+# Aligning substrings
+rowPath = []
+columnPath = []
+bestPath.each { |p| rowPath.push(p[0]) and columnPath.push(p[1]) }
+
+puts "Aligned strings:"
+puts alignString(row, rowPath)
+puts alignString(column, columnPath)
 
 #prettyPrint(matrix)
