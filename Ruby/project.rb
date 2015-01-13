@@ -148,50 +148,42 @@ def printAligned(path, row, column)
 
     puts alignString(row, rowPath)
     puts alignString(column, columnPath)
+    puts
+end
+
+# Creates string from file contents and returns it without special characters.
+def readStringFromFile(filePath)
+    lines = IO.readlines(filePath)
+    string = ""
+    for line in lines
+        line.chop! # removing \n and similar
+        string += line
+    end
+    return string
 end
 
 puts "PROGRAM START"
 puts "---------------------------------------------"
 
-column = IO.readlines(ARGV[0])[0]
-row = IO.readlines(ARGV[1])[0]
-
-columnLines = IO.readlines(ARGV[0])
-column = ""
-for line in columnLines
-    line.chop!
-    column += line
-end
-
-rowLines = IO.readlines(ARGV[1])
-row = ""
-for line in rowLines
-    line.chop!
-    row += line
-end
-
-#column = column[0...-1] # removing last space
-#row = row[0...-1] # removing last space
+# preparing data
+column = readStringFromFile(ARGV[0])
+row = readStringFromFile(ARGV[1])
 
 matrix = createMatrix(row, column)
-prettyPrint(matrix)
-
 bestPath = findBestPath(matrix)
 
-printPath(bestPath, matrix)
+# Printing aligned substring from the first matrix.
+puts "First alignment:"
+printAligned(bestPath, row, column)
 
 # Resets values in best path to zero.
 matrix = resetValues(matrix, bestPath)
 
+# Computing second matrix and second best path based on that matrix.
 start = bestPath[-1]
 matrix = recomputeMatrix(matrix, start[0], start[1], row, column)
 secondBestPath = findBestPath(matrix)
 
-printPath(secondBestPath, matrix)
-prettyPrint(matrix)
-
-# Printing aligned substring from the first matrix.
-printAligned(bestPath, row, column)
-
 # Printing aligned substring from the second matrix.
+puts "Second alignment:"
 printAligned(secondBestPath, row, column)
