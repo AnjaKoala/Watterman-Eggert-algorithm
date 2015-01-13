@@ -8,10 +8,9 @@ import java.util.List;
 public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException {
-		//at the beginning of every string there has to be a minus sign for program to work correctly!!!
 		//input arguments are two files, each file consists of one string!
-//		String colomn = "-AGTCCGAGGGCTACTCTACTGAAC";
-//		String row = "-CCAATCTACTACTGCTTGCAGTAC";
+//		String colomn = "-AAGAC";
+//		String row = "-AAGA";		
 		String fileName = args[0];
 		String fileName2 = args[1];
         BufferedReader input = new BufferedReader(new FileReader(fileName));
@@ -21,19 +20,30 @@ public class Main {
         String line1 = null;
         String colomn = null;
         String row = null;
+        int firstRow = 0;
+        int firstColomn = 0;
         try {
             while (( line = input.readLine()) != null){
-            	colomn = begin + line;
-                System.out.println(colomn);
+            	if(firstColomn==0){
+            		colomn = begin + line;
+            		firstColomn = 1;
+            		line="";
+            	}
+            	colomn = colomn + line;
             }
+//            System.out.println(colomn);
             while (( line1 = input2.readLine()) != null){
-            	row = begin + line1;
-                System.out.println(row);
+            	if(firstRow==0){
+            		row = begin + line1;
+            		line1="";
+            		firstRow=1;
+            	}
+            	row = row + line1;
             }
+//            System.out.println(row);
         } catch (Exception e) {
             e.printStackTrace();
-        } 
-
+        }  
 		int[][] doneMatrix = new int[row.length()][colomn.length()];
 		MakeMatrix makeMatrix = new MakeMatrix(colomn, row);
 		List<Integer> bestPath = new ArrayList<>();
