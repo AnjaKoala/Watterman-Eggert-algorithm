@@ -39,7 +39,6 @@ def findMax(matrix)
             end
         end
     end
-    puts max
     return max
 end
 
@@ -94,6 +93,7 @@ row = row[0...-1] # removing last space
 matrix = createMatrix(row, column)
 
 bestPath = findBestPath(matrix)
-puts bestPath
 
-#prettyPrint(matrix)
+print bestPath
+
+prettyPrint(matrix)
