@@ -88,8 +88,10 @@ for i in range(2, len(array2) + 2):
 					matrix_max_1[2]=j;
 #
 
+#######################debug print
 #pprint.pprint(matrix);
 #print("----------------------");
+#######################
 
 path_1.append([matrix_max_1[1], matrix_max_1[2]]);
 matrix[matrix_max_1[1]][matrix_max_1[2]] = "-50";
@@ -117,11 +119,12 @@ while (1):
 			path_1.append([i, j-1]);
 			matrix[i][j] = "-50";
 			j-=1;
-#
+			
+#######################debug print
 #print path_1;
-# drugi krug
 #print path_1;
 #pprint.pprint(matrix);
+#######################
 
 #Recalculation of the matrix
 for i in range(2, len(array2) + 2):
@@ -178,11 +181,12 @@ while (1):
 			j-=1;
 #
 
+#######################debug print
 #pprint.pprint(matrix);
 #print path_2;
-
+#######################
 path_2_i = path_2_i[::-1]; #row path
 path_2_j = path_2_j[::-1]; #column path
-print path_2_i;
+print path_2_i; 
 print path_2_j;
 	
