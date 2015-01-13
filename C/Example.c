@@ -3,9 +3,9 @@
 #include <conio.h>
 #include <string.h>
 
-#define MATCH 1
-#define MISMATCH -1
-#define INDEL -2
+#define MATCH 10
+#define MISMATCH -9
+#define INDEL -20
 
 struct alignment
 {
@@ -52,9 +52,9 @@ void createsequence(FILE *file, char *sequencearray) {
          if (c=='>') descrstar=1;
          if (c=='\n') descrend=1;
          if ((descrstar==1)&&(descrend==0)) { putchar(c);}
-         if ((descrstar==1)&&(descrend==1)) {
+         if (((descrstar==1)&&(descrend==1))&&(!(c=='\n'))) {
                                             putchar(c);
-                                            sequencearray[i]=c;
+                                            if(!(c=='\n')){sequencearray[i]=c;}
                                             i++; }}}  
      
      }
@@ -178,8 +178,6 @@ void find_path (char x[], char y[], struct cell **matrix, int m, int n) {
                   }
               }
 	
-	printf ("\n , i:%d, j:%d \n", i,j);
-	
 	printf ("\nMaximum value cell:\n");
 	printf ("V:%d , x:%d, y:%d", pom, imax,jmax);
 	printf("\n");
@@ -250,32 +248,37 @@ void find_path (char x[], char y[], struct cell **matrix, int m, int n) {
 	      printf ("\nAlignment length: %d", alignmentlength);
 	      printf("\n");
           
-          printf("\n");
+          FILE *output;
+          output=fopen("out.txt","a+");
           
-          
-          i=0;
-          printf("  ");
-          for (i = 0; i <c; i++) {
-          putchar(aligny[i]);
-          }
           
           printf("\n");
-          
-          i=0;
-          printf("  ");
-          for (i = 0; i <c; i++) {
-          putchar(alignx[i]);
-          }
-          
-          printf("\n");
-	
+	      
+	      for (i=(c-alignmentlength); i<c; i++) {
+              fputc(aligny[i],output);
+              putchar(aligny[i]);
+              }
+         
+         fputs("\n", output);  
+         printf("\n"); 
+              
+         for (i=(c-alignmentlength); i<c; i++) {
+              fputc(alignx[i],output);
+              putchar(alignx[i]);
+              }   
+	      
+	      fputs("\n \n", output);
+	      printf("\n");
+	      
+	      fclose(output);
+	      
 	      free(alignx);
           free(aligny); 
 	
 	
 }
 
-main()
+int main()
 {
 	  
 	  int seqcounter=0;
@@ -350,6 +353,8 @@ main()
         for (i = 0; i < (m+1); i++)  {
 		table1[i] = (struct cell*) malloc((n+1)*sizeof(struct cell)); }
       
+      if (table1==NULL) {printf ("\n Failed to reserve memory. \n"); return (-1); }
+      
       for (i = 0; i < m+1; i++) {
               for (j = 0; j < n+1; j++) {
               	if ((i==0)||(j==0)) {
@@ -386,6 +391,8 @@ main()
         for (int i = 0; i < (m+1); i++)  {
 		table2[i] = (struct cell*) malloc((n+1)*sizeof(struct cell)); }
       
+      if (table2==NULL) {printf ("\n Failed to reserve memory. \n"); return (-1); }
+      
       for (i = 0; i < m+1; i++) {
               for (j = 0; j < n+1; j++) {
               	if ((i==0)||(j==0)) {table2[i][j].value=0;}
@@ -409,7 +416,7 @@ main()
       /*calculating the path */
       find_path(c1,c2,table2,m,n);
       
-       
+      
     
 free(c1);
 free(c2);
@@ -420,5 +427,7 @@ free(table2);
       
 printf("\n \n");
 system("PAUSE");
+
+return 0;
 
 } 
