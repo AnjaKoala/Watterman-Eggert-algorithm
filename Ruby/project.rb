@@ -1,5 +1,6 @@
 # Ruby implementation of Smith&Waterman algorithm. 
-# Program takes two arguments - paths to files containing strings on which best subsequence alignment needs to be calculated.
+# Program takes two arguments - paths to files containing strings on
+# which best subsequence alignment needs to be calculated.
 
 require 'matrix'
 
@@ -13,17 +14,13 @@ $DELETION = -20
 def createMatrix(row, column)
     rowLength = row.length
     columnLength = column.length
-    matrix = Matrix.build(rowLength + 1, columnLength + 1) {0}
+    matrix = Array.new(rowLength + 1) { Array.new(columnLength + 1, 0) }
     for r in 1..rowLength
         for c in 1..columnLength
             if row[r - 1] == column[c - 1]
-                array = *matrix
-                array[r][c] = $MATCHREWARD + matrix[r - 1, c - 1]
-                matrix = Matrix[*array]
+                matrix[r][c] = $MATCHREWARD + matrix[r - 1][c - 1]
             else
-                array = *matrix
-                array[r][c] = [matrix[r, c - 1] + $DELETION, matrix[r - 1, c] + $INSERTION, matrix[r - 1, c - 1] + $MISMATCH, 0].max
-                matrix = Matrix[*array]
+                matrix[r][c] = [matrix[r][c - 1] + $DELETION, matrix[r - 1][c] + $INSERTION, matrix[r - 1][c - 1] + $MISMATCH, 0].max
             end
         end
     end
@@ -34,9 +31,9 @@ end
 # Returns coordinates of greatest value in given matrix.
 def findMax(matrix)
     max = [0, 0]
-    for i in 0..matrix.row_size - 1
-        for j in 0..matrix.column_size - 1
-            if matrix[i, j] > matrix[max[0], max[1]]
+    for i in 0..matrix.length - 1
+        for j in 0..matrix[0].length - 1
+            if matrix[i][j] > matrix[max[0]][max[1]]
                 max = [i, j]
             end
         end
@@ -48,7 +45,7 @@ end
 def argMax(choices, matrix)
     max = choices[0]
     for choice in choices
-        if matrix[choice[0], choice[1]] > matrix[max[0], max[1]]
+        if matrix[choice[0]][choice[1]] > matrix[max[0]][max[1]]
             max = choice
         end
     end
@@ -65,7 +62,7 @@ def findBestPath(matrix)
 
     choices = [[0, 0], [0, 0], [0, 0]]
 
-    while p[0] > 0 && p[1] > 0 && matrix[p[0], p[1]] != 0
+    while p[0] > 0 && p[1] > 0 && matrix[p[0]][p[1]] != 0
         path.push(p)
         for i in 0..2
             choices[i] = [p[0] + dx[i], p[1] + dy[i]]
@@ -81,15 +78,15 @@ def printPath(path, matrix)
     for coordinate in path
         x = coordinate[0]
         y = coordinate[1]
-        puts x.to_s + " " + y.to_s + ": " + matrix[x, y].to_s
+        puts x.to_s + " " + y.to_s + ": " + matrix[x][y].to_s
     end
 end
 
 # Prints matrix on the screen, beautifully.
 def prettyPrint(matrix) 
-    for i in 0..matrix.row_size - 1 
-        for j in 0..matrix.column_size - 1
-            printf("%3d ", matrix[i, j])
+    for i in 0..matrix.length - 1 
+        for j in 0..matrix[0].length - 1
+            printf("%3d ", matrix[i][j])
         end
         puts 
     end
@@ -113,26 +110,20 @@ end
 # Sets all values at coordinates given by bestPath to zero.
 def resetValues(matrix, path)
     for p in path
-        array = *matrix
-        array[p[0]][p[1]] = 0
-        matrix = Matrix[*array]
+        matrix[p[0]][p[1]] = 0
     end
     return matrix
 end
 
 # Recomputes given matrix (Smith&Watterson) into second best matrix (Smith&Eggert).
 def recomputeMatrix(matrix, startRow, startColumn, rowString, columnString)
-    for r in startRow..matrix.row_size - 1
-        for c in startColumn..matrix.column_size - 1
-            if matrix[r, c] > 0
+    for r in startRow..matrix.length - 1
+        for c in startColumn..matrix[0].length - 1
+            if matrix[r][c] > 0
                 if rowString[r - 1] == columnString[c - 1]
-                    array = *matrix
-                    array[r][c] = $MATCHREWARD + matrix[r - 1, c - 1]
-                    matrix = Matrix[*array]
+                    matrix[r][c] =  $MATCHREWARD + matrix[r - 1][c - 1]
                 else
-                    array = *matrix
-                    array[r][c] = [matrix[r, c - 1] + $DELETION, matrix[r - 1, c] + $INSERTION, matrix[r - 1, c - 1] + $MISMATCH, 0].max
-                    matrix = Matrix[*array]
+                    matrix[r][c] = [matrix[r][c - 1] + $DELETION, matrix[r - 1][c] + $INSERTION, matrix[r - 1][c - 1] + $MISMATCH, 0].max
                 end
             end
         end
@@ -164,6 +155,10 @@ end
 
 puts "PROGRAM START"
 puts "---------------------------------------------"
+
+array = Array.new(5) { Array.new(10, 0) }
+puts array[0].length
+#exit(0)
 
 # preparing data
 column = readStringFromFile(ARGV[0])
