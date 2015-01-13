@@ -30,6 +30,7 @@ def createMatrix(row, column)
     return matrix
 end
 
+# Returns coordinates of greatest value in given matrix.
 def findMax(matrix)
     max = [0, 0]
     for i in 0..matrix.row_size - 1
@@ -42,6 +43,7 @@ def findMax(matrix)
     return max
 end
 
+# Given coordinates of matrix, returns nearby coordinates with greatest value.
 def argMax(choices, matrix)
     max = choices[0]
     for choice in choices
@@ -52,6 +54,7 @@ def argMax(choices, matrix)
     return max
 end
 
+# Finds the best path of given matrix (list of coordinates).
 def findBestPath(matrix)
     p = findMax(matrix)
     path = []
@@ -71,7 +74,7 @@ def findBestPath(matrix)
     return path
 end
 
-# Prints matrix on the screen
+# Prints matrix on the screen, beautifully.
 def prettyPrint(matrix) 
     for i in 0..matrix.row_size - 1 
         for j in 0..matrix.column_size - 1
@@ -96,4 +99,4 @@ bestPath = findBestPath(matrix)
 
 print bestPath
 
-prettyPrint(matrix)
+#prettyPrint(matrix)
