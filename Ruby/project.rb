@@ -120,7 +120,36 @@ def resetValues(matrix, path)
     return matrix
 end
 
-puts "START"
+# Recomputes given matrix (Smith&Watterson) into second best matrix (Smith&Eggert).
+def recomputeMatrix(matrix, startRow, startColumn, rowString, columnString)
+    for r in startRow..matrix.row_size - 1
+        for c in startColumn..matrix.column_size - 1
+            if matrix[r, c] > 0
+                if rowString[r - 1] == columnString[c - 1]
+                    array = *matrix
+                    array[r][c] = $MATCHREWARD + matrix[r - 1, c - 1]
+                    matrix = Matrix[*array]
+                else
+                    array = *matrix
+                    array[r][c] = [matrix[r, c - 1] + $DELETION, matrix[r - 1, c] + $INSERTION, matrix[r - 1, c - 1] + $MISMATCH, 0].max
+                    matrix = Matrix[*array]
+                end
+            end
+        end
+    end
+    return matrix
+end
+
+def printAligned(path, row, column)
+    rowPath = []
+    columnPath = []
+    path.each { |p| rowPath.push(p[0]) and columnPath.push(p[1]) }
+
+    puts alignString(row, rowPath)
+    puts alignString(column, columnPath)
+end
+
+puts "PROGRAM START"
 puts "---------------------------------------------"
 
 column = IO.readlines(ARGV[0])[0]
@@ -130,6 +159,7 @@ column = column[0...-1] # removing last space
 row = row[0...-1] # removing last space
 
 matrix = createMatrix(row, column)
+prettyPrint(matrix)
 
 bestPath = findBestPath(matrix)
 
@@ -138,15 +168,15 @@ printPath(bestPath, matrix)
 # Resets values in best path to zero.
 matrix = resetValues(matrix, bestPath)
 
+start = bestPath[-1]
+matrix = recomputeMatrix(matrix, start[0], start[1], row, column)
+secondBestPath = findBestPath(matrix)
+
+printPath(secondBestPath, matrix)
 prettyPrint(matrix)
 
-# Aligning substrings
-rowPath = []
-columnPath = []
-bestPath.each { |p| rowPath.push(p[0]) and columnPath.push(p[1]) }
+# Printing aligned substring from the first matrix.
+printAligned(bestPath, row, column)
 
-puts "Aligned strings:"
-puts alignString(row, rowPath)
-puts alignString(column, columnPath)
-
-#prettyPrint(matrix)
+# Printing aligned substring from the second matrix.
+printAligned(secondBestPath, row, column)
