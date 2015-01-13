@@ -92,7 +92,9 @@ for i in range(2, len(array2) + 2):
 #
 
 #######################debug print
+#print "Matrix after the first round of matrix calculation:";
 #pprint.pprint(matrix);
+#print "Matrix maximum after the first round of matrix calculation: ", matrix_max;
 #print("----------------------");
 #######################
 
@@ -125,9 +127,7 @@ while (1):
 			j-=1;
 			
 #######################debug print
-#print path_1;
-#print path_1;
-#pprint.pprint(matrix);
+#print "Path after the first calculation of the matrix: ", path_1;
 #######################
 
 #Recalculation of the matrix
