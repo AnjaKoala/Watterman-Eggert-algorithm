@@ -140,6 +140,7 @@ def recomputeMatrix(matrix, startRow, startColumn, rowString, columnString)
     return matrix
 end
 
+# Given two strings and path, prints them aligned.
 def printAligned(path, row, column)
     rowPath = []
     columnPath = []
@@ -155,8 +156,22 @@ puts "---------------------------------------------"
 column = IO.readlines(ARGV[0])[0]
 row = IO.readlines(ARGV[1])[0]
 
-column = column[0...-1] # removing last space
-row = row[0...-1] # removing last space
+columnLines = IO.readlines(ARGV[0])
+column = ""
+for line in columnLines
+    line.chop!
+    column += line
+end
+
+rowLines = IO.readlines(ARGV[1])
+row = ""
+for line in rowLines
+    line.chop!
+    row += line
+end
+
+#column = column[0...-1] # removing last space
+#row = row[0...-1] # removing last space
 
 matrix = createMatrix(row, column)
 prettyPrint(matrix)
