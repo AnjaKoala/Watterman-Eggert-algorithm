@@ -137,7 +137,10 @@ def printAligned(path, row, column)
     columnPath = []
     path.each { |p| rowPath.push(p[0]) and columnPath.push(p[1]) }
 
+    puts "First string"
     puts alignString(row, rowPath)
+    puts
+    puts "Second string"
     puts alignString(column, columnPath)
     puts
 end
@@ -156,10 +159,6 @@ end
 puts "PROGRAM START"
 puts "---------------------------------------------"
 
-array = Array.new(5) { Array.new(10, 0) }
-puts array[0].length
-#exit(0)
-
 # preparing data
 column = readStringFromFile(ARGV[0])
 row = readStringFromFile(ARGV[1])
@@ -169,6 +168,7 @@ bestPath = findBestPath(matrix)
 
 # Printing aligned substring from the first matrix.
 puts "First alignment:"
+puts
 printAligned(bestPath, row, column)
 
 # Resets values in best path to zero.
@@ -181,4 +181,5 @@ secondBestPath = findBestPath(matrix)
 
 # Printing aligned substring from the second matrix.
 puts "Second alignment:"
+puts
 printAligned(secondBestPath, row, column)
