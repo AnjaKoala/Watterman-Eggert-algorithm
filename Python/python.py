@@ -181,8 +181,8 @@ while (1):
 #pprint.pprint(matrix);
 #print path_2;
 
-path_2_i = path_2_i[::-1];
-path_2_j = path_2_j[::-1];
+path_2_i = path_2_i[::-1]; #row path
+path_2_j = path_2_j[::-1]; #column path
 print path_2_i;
 print path_2_j;
 	
