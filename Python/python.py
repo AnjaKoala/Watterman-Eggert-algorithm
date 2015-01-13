@@ -2,22 +2,22 @@ import pprint
 import sys
 
 # i represents number of the row, j represents the number of the column
-matrix_max_1 = [0, 0, 0]; # [value of the field, i coordinate, j coordinate]
-matrix_max_2 = [0, 0, 0]; # [value of the field, i coordinate, j coordinate]
+matrix_max_1 = [0, 0, 0]; # [value of the field, i coordinate, j coordinate], initialization
+matrix_max_2 = [0, 0, 0]; # [value of the field, i coordinate, j coordinate], initialization
 path_1 = []; # first best path
 path_2 = []; # second best path
 path_2_i = []; # second best path by rows
 path_2_j = []; # second best path by columns
-i_backup = -5;
-j_backup = -5;
+i_backup = -5; #i_backup represents the value of the row of the last best path member
+j_backup = -5; #j_backup represents the value of the column of the last best path member
 #
 
 #function that is called in a case that there is a match
 def matching(i, j):
-	count = 10; #10 is the maximum prize
+	count = 10; #10 is the prize
 	if (matrix[i-1][j-1] != 0):
 		count += matrix[i-1][j-1];
-	matrix[i][j] = count;
+	matrix[i][j] = count; #this function changes the value of a matrix field
 	return;
 #
 
@@ -38,10 +38,13 @@ def nonmatching(i, j):
 #
 
 
-
+#########################
 #########################
 #########################
 #Beginning of the program
+#########################
+#########################
+#########################
 
 #Reading the input parameters
 first_File = sys.argv[1];
@@ -75,21 +78,23 @@ for i in range(2, len(array2) + 2):
 	for j in range(2, len(array1) + 2):
 		if (matrix[i][0] != "-" and matrix[0][j] != "-" and matrix[i][j] != "-"):
 			if (matrix[i][0] == matrix[0][j]):
-				matching(i, j);
+				matching(i, j); #There is a match in row and column Genome Sequence String
 				if (matrix[i][j] > matrix_max_1[0]):
 					matrix_max_1[0]=matrix[i][j];
 					matrix_max_1[1]=i;
 					matrix_max_1[2]=j;
 			else:
-				nonmatching(i, j);
+				nonmatching(i, j);#There isn't match in row and column Genome Sequence String
 				if (matrix[i][j] > matrix_max_1[0]):
 					matrix_max_1[0]=matrix[i][j];
 					matrix_max_1[1]=i;
 					matrix_max_1[2]=j;
 #
 
+#######################debug print
 #pprint.pprint(matrix);
 #print("----------------------");
+#######################
 
 path_1.append([matrix_max_1[1], matrix_max_1[2]]);
 matrix[matrix_max_1[1]][matrix_max_1[2]] = "-50";
@@ -97,16 +102,17 @@ i=matrix_max_1[1];
 j=matrix_max_1[2];
 
 #First path calculation and putting the values of the first best path into -50 just for later recognition
+####-50 is the value set for the first best Path in order to differentiate it from the other 0 values in the processing later
 while (1):
 		diagonal = matrix[i-1][j-1];
 		upp = matrix[i-1][j];
 		left = matrix[i][j-1];
 		if (diagonal==0 and upp==0 and left==0):
 			matrix[i][j] = "-50";
-			break;
+			break; #The last Path member is found
 		if diagonal >= max(upp, left):
 			path_1.append([i-1, j-1]);
-			matrix[i][j] = "-50";
+			matrix[i][j] = "-50"; 
 			i-=1;
 			j-=1;
 		elif upp >= max(diagonal, left):
@@ -117,11 +123,12 @@ while (1):
 			path_1.append([i, j-1]);
 			matrix[i][j] = "-50";
 			j-=1;
-#
+			
+#######################debug print
 #print path_1;
-# drugi krug
 #print path_1;
 #pprint.pprint(matrix);
+#######################
 
 #Recalculation of the matrix
 for i in range(2, len(array2) + 2):
@@ -178,11 +185,12 @@ while (1):
 			j-=1;
 #
 
+#######################debug print
 #pprint.pprint(matrix);
 #print path_2;
-
-path_2_i = path_2_i[::-1];
-path_2_j = path_2_j[::-1];
-print path_2_i;
+#######################
+path_2_i = path_2_i[::-1]; #row path
+path_2_j = path_2_j[::-1]; #column path
+print path_2_i; 
 print path_2_j;
 	
