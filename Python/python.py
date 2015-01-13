@@ -2,22 +2,22 @@ import pprint
 import sys
 
 # i represents number of the row, j represents the number of the column
-matrix_max_1 = [0, 0, 0]; # [value of the field, i coordinate, j coordinate]
-matrix_max_2 = [0, 0, 0]; # [value of the field, i coordinate, j coordinate]
+matrix_max_1 = [0, 0, 0]; # [value of the field, i coordinate, j coordinate], initialization
+matrix_max_2 = [0, 0, 0]; # [value of the field, i coordinate, j coordinate], initialization
 path_1 = []; # first best path
 path_2 = []; # second best path
 path_2_i = []; # second best path by rows
 path_2_j = []; # second best path by columns
-i_backup = -5;
-j_backup = -5;
+i_backup = -5; #i_backup represents the value of the row of the last best path member
+j_backup = -5; #j_backup represents the value of the column of the last best path member
 #
 
 #function that is called in a case that there is a match
 def matching(i, j):
-	count = 10; #10 is the maximum prize
+	count = 10; #10 is the prize
 	if (matrix[i-1][j-1] != 0):
 		count += matrix[i-1][j-1];
-	matrix[i][j] = count;
+	matrix[i][j] = count; #this function changes the value of a matrix field
 	return;
 #
 
@@ -143,7 +143,6 @@ for i in range(2, len(array2) + 2):
 			matrix_max_2[1]=i;
 			matrix_max_2[2]=j;
 #
-
 
 path_2.append([matrix_max_2[1], matrix_max_2[2]]);
 i=matrix_max_2[1];
