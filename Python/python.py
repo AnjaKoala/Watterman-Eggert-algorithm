@@ -92,7 +92,9 @@ for i in range(2, len(array2) + 2):
 #
 
 #######################debug print
+#print "Matrix after the first round of matrix calculation:";
 #pprint.pprint(matrix);
+#print "Matrix maximum after the first round of matrix calculation: ", matrix_max;
 #print("----------------------");
 #######################
 
@@ -125,9 +127,8 @@ while (1):
 			j-=1;
 			
 #######################debug print
-#print path_1;
-#print path_1;
-#pprint.pprint(matrix);
+#print "Path after the first calculation of the matrix: ", path_1;
+#print "--------------------------------------------------------";
 #######################
 
 #Recalculation of the matrix
@@ -142,6 +143,11 @@ for i in range(2, len(array2) + 2):
 			nonmatching(i, j);
 #
 
+#######################debug print
+#print "Recalculated Matrix - values of the first best path replaced:";
+#pprint.pprint(matrix);
+#######################
+
 #Finding the matrix maximum
 for i in range(2, len(array2) + 2):
 	for j in range(2, len(array1) + 2):
@@ -154,6 +160,12 @@ for i in range(2, len(array2) + 2):
 path_2.append([matrix_max_2[1], matrix_max_2[2]]);
 i=matrix_max_2[1];
 j=matrix_max_2[2];
+
+#######################debug print
+#print "Recalculated Matrix - Matrix with first path annuled:";
+#pprint.pprint(matrix);
+#print "Recalculated Matrix - Matrix maximum with first path annuled: ", matrix_max_2";
+#######################
 
 #Finding the best second path
 while (1):
@@ -169,8 +181,8 @@ while (1):
 		else:
 			path_2_i.append(matrix[i][0]);
 			path_2_j.append(matrix[0][j]);
-		i_backup = i;
-		j_backup = j;
+		i_backup = i; #value preserved for the next iteration
+		j_backup = j; #value preserved for the next iteration
 		if (diagonal==0 and upp==0 and left==0):
 			break;
 		elif diagonal >= max(upp, left):
@@ -186,8 +198,7 @@ while (1):
 #
 
 #######################debug print
-#pprint.pprint(matrix);
-#print path_2;
+#print "*Final* path", path_2;
 #######################
 path_2_i = path_2_i[::-1]; #row path
 path_2_j = path_2_j[::-1]; #column path
