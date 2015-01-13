@@ -42,6 +42,9 @@ def nonmatching(i, j):
 #########################
 #########################
 #Beginning of the program
+#########################
+#########################
+#########################
 
 #Reading the input parameters
 first_File = sys.argv[1];
@@ -75,13 +78,13 @@ for i in range(2, len(array2) + 2):
 	for j in range(2, len(array1) + 2):
 		if (matrix[i][0] != "-" and matrix[0][j] != "-" and matrix[i][j] != "-"):
 			if (matrix[i][0] == matrix[0][j]):
-				matching(i, j);
+				matching(i, j); #There is a match in row and column Genome Sequence String
 				if (matrix[i][j] > matrix_max_1[0]):
 					matrix_max_1[0]=matrix[i][j];
 					matrix_max_1[1]=i;
 					matrix_max_1[2]=j;
 			else:
-				nonmatching(i, j);
+				nonmatching(i, j);#There isn't match in row and column Genome Sequence String
 				if (matrix[i][j] > matrix_max_1[0]):
 					matrix_max_1[0]=matrix[i][j];
 					matrix_max_1[1]=i;
@@ -99,16 +102,17 @@ i=matrix_max_1[1];
 j=matrix_max_1[2];
 
 #First path calculation and putting the values of the first best path into -50 just for later recognition
+####-50 is the value set for the first best Path in order to differentiate it from the other 0 values in the processing later
 while (1):
 		diagonal = matrix[i-1][j-1];
 		upp = matrix[i-1][j];
 		left = matrix[i][j-1];
 		if (diagonal==0 and upp==0 and left==0):
 			matrix[i][j] = "-50";
-			break;
+			break; #The last Path member is found
 		if diagonal >= max(upp, left):
 			path_1.append([i-1, j-1]);
-			matrix[i][j] = "-50";
+			matrix[i][j] = "-50"; 
 			i-=1;
 			j-=1;
 		elif upp >= max(diagonal, left):
