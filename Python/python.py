@@ -38,7 +38,7 @@ def nonmatching(i, j):
 #
 
 
-
+#########################
 #########################
 #########################
 #Beginning of the program
@@ -143,6 +143,7 @@ for i in range(2, len(array2) + 2):
 			matrix_max_2[1]=i;
 			matrix_max_2[2]=j;
 #
+
 
 path_2.append([matrix_max_2[1], matrix_max_2[2]]);
 i=matrix_max_2[1];
