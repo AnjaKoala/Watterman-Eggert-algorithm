@@ -169,8 +169,8 @@ while (1):
 		else:
 			path_2_i.append(matrix[i][0]);
 			path_2_j.append(matrix[0][j]);
-		i_backup = i;
-		j_backup = j;
+		i_backup = i; #value preserved for the next iteration
+		j_backup = j; #value preserved for the next iteration
 		if (diagonal==0 and upp==0 and left==0):
 			break;
 		elif diagonal >= max(upp, left):
