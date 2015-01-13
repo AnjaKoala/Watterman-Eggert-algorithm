@@ -10,8 +10,8 @@ public class Main {
 	public static void main(String[] args) throws FileNotFoundException {
 		//at the beginning of every string there has to be a minus sign for program to work correctly!!!
 		//input arguments are two files, each file consists of one string!
-	//	String colomn = "-AGTCCGAGGGCTACTCTACTGAAC";
-	//	String row = "-CCAATCTACTACTGCTTGCAGTAC";
+//		String colomn = "-AGTCCGAGGGCTACTCTACTGAAC";
+//		String row = "-CCAATCTACTACTGCTTGCAGTAC";
 		String fileName = args[0];
 		String fileName2 = args[1];
         BufferedReader input = new BufferedReader(new FileReader(fileName));
@@ -38,10 +38,10 @@ public class Main {
 		MakeMatrix makeMatrix = new MakeMatrix(colomn, row);
 		List<Integer> bestPath = new ArrayList<>();
 		doneMatrix = makeMatrix.make();
-		makeMatrix.printMatrix(doneMatrix);
+	//	makeMatrix.printMatrix(doneMatrix);
 		FindBest findBest = new FindBest(doneMatrix);
 		bestPath=findBest.BestPath();
-		makeMatrix.printLetters(bestPath);
+//		makeMatrix.printLetters(bestPath);
 		FindSecondBest findSecondBest = new FindSecondBest(doneMatrix,colomn,row);
 		findSecondBest.pripremi(bestPath);	
 	}

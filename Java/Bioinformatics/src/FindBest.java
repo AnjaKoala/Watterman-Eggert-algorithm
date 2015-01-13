@@ -49,7 +49,7 @@ public class FindBest {
 				listOfTheBest.add(colomn1);
 			}
 		}
-		System.out.println(bestPath);
+//		System.out.println(bestPath);
 		return listOfTheBest;
 	}	
 }

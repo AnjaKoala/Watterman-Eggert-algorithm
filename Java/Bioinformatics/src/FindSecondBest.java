@@ -24,7 +24,7 @@ public class FindSecondBest {
 			matrix[path.get(i)][path.get(i+1)]=0;		
 		}							//row colomn
 		matrix2=makeMatrix.makeSecond(matrix,path.get(path.size()-1), path.get(path.size()-2)); //recalculating the matrix
-		makeMatrix.printMatrix(matrix2);
+	//	makeMatrix.printMatrix(matrix2);
 		FindBest findSecondBest = new FindBest(matrix2); //finding the path for the second matrix
 		bestSecondPath=findSecondBest.BestPath();
 		makeMatrix.printLetters(bestSecondPath);
