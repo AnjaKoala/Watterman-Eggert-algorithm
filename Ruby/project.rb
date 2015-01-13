@@ -30,6 +30,49 @@ def createMatrix(row, column)
     return matrix
 end
 
+def findMax(matrix)
+    max = [0, 0]
+    for i in 0..matrix.row_size - 1
+        for j in 0..matrix.column_size - 1
+            if matrix[i, j] > matrix[max[0], max[1]]
+                max = [i, j]
+            end
+        end
+    end
+    puts max
+    return max
+end
+
+def argMax(choices, matrix)
+    max = choices[0]
+    for choice in choices
+        if matrix[choice[0], choice[1]] > matrix[max[0], max[1]]
+            max = choice
+        end
+    end
+    return max
+end
+
+def findBestPath(matrix)
+    p = findMax(matrix)
+    path = []
+
+    dy = [-1, -1, 0]
+    dx = [-1, 0, -1]
+
+    choices = [[0, 0], [0, 0], [0, 0]]
+
+    while p[0] > 0 && p[1] > 0 && matrix[p[0], p[1]] != 0
+        path.push(p)
+        for i in 0..2
+            choices[i] = [p[0] + dx[i], p[1] + dy[i]]
+        end
+        p = argMax(choices, matrix)
+    end
+    return path
+end
+
+# Prints matrix on the screen
 def prettyPrint(matrix) 
     for i in 0..matrix.row_size - 1 
         for j in 0..matrix.column_size - 1
@@ -45,11 +88,12 @@ puts "---------------------------------------------"
 column = IO.readlines(ARGV[0])[0]
 row = IO.readlines(ARGV[1])[0]
 
-column = column[0...-1]
-row = row[0...-1]
-
-puts column
-puts row
+column = column[0...-1] # removing last space
+row = row[0...-1] # removing last space
 
 matrix = createMatrix(row, column)
-prettyPrint(matrix)
+
+bestPath = findBestPath(matrix)
+puts bestPath
+
+#prettyPrint(matrix)
