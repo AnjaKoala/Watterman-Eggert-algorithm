@@ -278,7 +278,7 @@ void find_path (char x[], char y[], struct cell **matrix, int m, int n) {
 	
 }
 
-int main()
+int main(int argc, char *argv[])
 {
 	  
 	  int seqcounter=0;
@@ -293,10 +293,10 @@ int main()
       char *c2;
    
       FILE *file;
-      file = fopen("test1.txt", "r");
+      file = fopen(argv[1], "r");
    
       FILE *file2;
-      file2 = fopen("test2.txt", "r");
+      file2 = fopen(argv[2], "r");
 	
 	  seqcounter=readcounter(file);
       seqcounter2=readcounter(file2);
