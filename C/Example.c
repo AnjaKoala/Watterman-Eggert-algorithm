@@ -175,7 +175,7 @@ void find_path (char x[], char y[], struct cell **matrix, int m, int n) {
 	
 	printf ("\nMaximum value cell:\n");
 	printf ("V:%d , x:%d, y:%d", pom, imax,jmax);
-	printf("\n");
+	printf("\n"); 
 	
 	/*finding alignment starting from cell with maximum value*/
 	
@@ -220,7 +220,7 @@ void find_path (char x[], char y[], struct cell **matrix, int m, int n) {
                 alignx[z]=x[j-1];
                 aligny[z]=y[i-1];
                 
-				printf("\n V=%d, x=%d, y=%d",matrix[i][j].value,i,j);
+				/*printf("\n V=%d, x=%d, y=%d",matrix[i][j].value,i,j);*/
 				
 				
                 if ((currentcell.direction==0)&&(currentcell.value!=0)) {i--;j--;}
@@ -273,7 +273,7 @@ void find_path (char x[], char y[], struct cell **matrix, int m, int n) {
 	
 }
 
-int main()
+int main(int argc, char *argv[])
 {
 	  
 	  int seqcounter=0;
@@ -286,12 +286,15 @@ int main()
 	
 	  char *c1;
       char *c2;
-   
+      
+      
       FILE *file;
-      file = fopen("test1.txt", "r");
+      file = fopen(argv[1], "r");
    
       FILE *file2;
-      file2 = fopen("test2.txt", "r");
+      file2 = fopen(argv[2], "r");
+      
+      
 	
 	  seqcounter=readcounter(file);
       seqcounter2=readcounter(file2);
@@ -396,7 +399,6 @@ int main()
       
       if (table2==NULL) {printf ("\n Failed to reserve memory. \n"); return (-1); }
       
-      printf("\n hej  m=%d n=%d \n", m, n);
       
       for (i = 0; i < m+1; i++) {
               for (j = 0; j < n+1; j++) {
@@ -422,8 +424,6 @@ int main()
       /*calculating the path */
       find_path(c1,c2,table2,m,n);
       
-      printf("\n Counter1=%d \n",seqcounter);
-      printf("\n Counter2=%d \n",seqcounter2);
       
 fclose(file);
 fclose(file2);      
@@ -441,4 +441,3 @@ system("PAUSE");
 return 0;
 
 } 
-
