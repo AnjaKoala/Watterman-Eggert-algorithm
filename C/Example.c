@@ -7,11 +7,6 @@
 #define MISMATCH -9
 #define INDEL -20
 
-struct alignment
-{
-       char symbol1;
-       char symbol2;
-};
 
 struct cell
 {
@@ -33,7 +28,7 @@ int readcounter (FILE *file) {
          if (c=='>') descrstar=1;
          if (c=='\n') descrend=1;
          if ((descrstar==1)&&(descrend==1)) {
-                                            seqcounter++; }}}
+                                           if(!((c=='\n')||(c==' '))) {seqcounter++;}  }}}
                                             
    return seqcounter;                                
    
@@ -54,7 +49,7 @@ void createsequence(FILE *file, char *sequencearray) {
          if ((descrstar==1)&&(descrend==0)) { putchar(c);}
          if (((descrstar==1)&&(descrend==1))&&(!(c=='\n'))) {
                                             putchar(c);
-                                            if(!(c=='\n')){sequencearray[i]=c;}
+                                            if(!((c=='\n')||(c==' '))) {sequencearray[i]=c;}
                                             i++; }}}  
      
      }
@@ -180,7 +175,7 @@ void find_path (char x[], char y[], struct cell **matrix, int m, int n) {
 	
 	printf ("\nMaximum value cell:\n");
 	printf ("V:%d , x:%d, y:%d", pom, imax,jmax);
-	printf("\n");
+	printf("\n"); 
 	
 	/*finding alignment starting from cell with maximum value*/
 	
@@ -225,7 +220,7 @@ void find_path (char x[], char y[], struct cell **matrix, int m, int n) {
                 alignx[z]=x[j-1];
                 aligny[z]=y[i-1];
                 
-				printf("\n V=%d, x=%d, y=%d",matrix[i][j].value,i,j);
+				/*printf("\n V=%d, x=%d, y=%d",matrix[i][j].value,i,j);*/
 				
 				
                 if ((currentcell.direction==0)&&(currentcell.value!=0)) {i--;j--;}
@@ -291,15 +286,21 @@ int main(int argc, char *argv[])
 	
 	  char *c1;
       char *c2;
-   
+      
+      
       FILE *file;
       file = fopen(argv[1], "r");
    
       FILE *file2;
       file2 = fopen(argv[2], "r");
+      
+      
 	
 	  seqcounter=readcounter(file);
       seqcounter2=readcounter(file2);
+      
+      printf("\n Counter1=%d \n",seqcounter);
+      printf("\n Counter2=%d \n",seqcounter2);
          
       printf("\n \n");
    
@@ -307,15 +308,21 @@ int main(int argc, char *argv[])
    
       for (i = 0; i < seqcounter; i++) {
         c1[i]='-';}
-  
+     
+     if (c1==NULL) {printf ("\n Failed to reserve memory. \n"); return (-1); }
   
      c2 = (char *)malloc(seqcounter * sizeof(char)); 
    
      for (i = 0; i < seqcounter2; i++) {
         c2[i]='-';}
 	
+	if (c2==NULL) {printf ("\n Failed to reserve memory. \n"); return (-1); }
+	
 	rewind(file);
     rewind(file2);
+  
+    printf("\n \n");
+  
   
     createsequence(file, c1); 
   
@@ -323,12 +330,9 @@ int main(int argc, char *argv[])
   
     createsequence(file2, c2); 
      
- 
-    fclose(file);
-    fclose(file2);
     
-    printf("\n Counter1=%d \n",seqcounter);
-    printf("\n Counter2=%d \n",seqcounter2);
+    
+    printf("\n");
     
     for (i = 0; i < seqcounter; i++) {
         putchar(c1[i]);}
@@ -352,6 +356,8 @@ int main(int argc, char *argv[])
       table1 = (struct cell**) malloc((m+1)*sizeof(struct cell*));  
         for (i = 0; i < (m+1); i++)  {
 		table1[i] = (struct cell*) malloc((n+1)*sizeof(struct cell)); }
+      
+      
       
       if (table1==NULL) {printf ("\n Failed to reserve memory. \n"); return (-1); }
       
@@ -393,6 +399,7 @@ int main(int argc, char *argv[])
       
       if (table2==NULL) {printf ("\n Failed to reserve memory. \n"); return (-1); }
       
+      
       for (i = 0; i < m+1; i++) {
               for (j = 0; j < n+1; j++) {
               	if ((i==0)||(j==0)) {table2[i][j].value=0;}
@@ -402,6 +409,7 @@ int main(int argc, char *argv[])
               }
           }
       
+       
           
       /*printmatrix (table2, m+1, n+1, c1, c2 );*/    
     
@@ -417,6 +425,8 @@ int main(int argc, char *argv[])
       find_path(c1,c2,table2,m,n);
       
       
+fclose(file);
+fclose(file2);      
     
 free(c1);
 free(c2);
