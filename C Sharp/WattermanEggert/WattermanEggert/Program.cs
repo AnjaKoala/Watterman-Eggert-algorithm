@@ -58,13 +58,13 @@ namespace WattermanEggert
                 PrintPath(secondBestPath, matrix);
             }
 
-            /** Align column nucleotides based on the first coordinates of path pairs. */
-            string rowAligned = AlignString(row, secondBestPath.Select(t => t.Item1).ToList());
-            Console.WriteLine(rowAligned);
-
             /** Align row nucleotides based on the first coordinates of path pairs. */
             string columnAligned = AlignString(column, secondBestPath.Select(t => t.Item2).ToList());
             Console.WriteLine(columnAligned);
+
+            /** Align column nucleotides based on the first coordinates of path pairs. */
+            string rowAligned = AlignString(row, secondBestPath.Select(t => t.Item1).ToList());
+            Console.WriteLine(rowAligned);
         }
 
         /** Computes the Smith&Waterman matrix used for string comparison. Also adds one null row and one null column for the sake of implementation simplicity. */
