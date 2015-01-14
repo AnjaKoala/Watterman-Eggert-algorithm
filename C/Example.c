@@ -346,12 +346,10 @@ int main(int argc, char *argv[])
       m=seqcounter;
       n=seqcounter2;
       
-      printf("\n  m=%d n=%d \n", m, n);
+      printf("\n  Dimension m=%d n=%d \n", m, n);
       
       /* creating matrix H*/
-      
-      
-      
+    
       struct cell** table1;  
       table1 = (struct cell**) malloc((m+1)*sizeof(struct cell*));  
         for (i = 0; i < (m+1); i++)  {
@@ -394,7 +392,7 @@ int main(int argc, char *argv[])
       /*creating the matrix H* */  
     struct cell** table2;  
       table2 = (struct cell**) malloc((m+1)*sizeof(struct cell*));  
-        for (int i = 0; i < (m+1); i++)  {
+        for (i = 0; i < (m+1); i++)  {
 		table2[i] = (struct cell*) malloc((n+1)*sizeof(struct cell)); }
       
       if (table2==NULL) {printf ("\n Failed to reserve memory. \n"); return (-1); }
@@ -436,7 +434,6 @@ free(table2);
     
       
 printf("\n \n");
-system("PAUSE");
 
 return 0;
 
