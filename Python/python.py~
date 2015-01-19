@@ -202,6 +202,6 @@ while (1):
 #######################
 path_2_i = path_2_i[::-1]; #row path
 path_2_j = path_2_j[::-1]; #column path
-print "".join(path_2_i);
-print "".join(path_2_j);
+print path_2_i.join(""); 
+print path_2_j.join("");
 	

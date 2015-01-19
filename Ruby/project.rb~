@@ -138,8 +138,8 @@ def printAligned(path, row, column)
     path.each { |p| rowPath.push(p[0]) and columnPath.push(p[1]) }
 
 #  puts "First string"
-    puts alignString(column, columnPath).reverse
-    puts alignString(row, rowPath).reverse
+    puts alignString(column, columnPath)
+    puts alignString(row, rowPath)
 #   puts
 #   puts "Second string"
 #   puts

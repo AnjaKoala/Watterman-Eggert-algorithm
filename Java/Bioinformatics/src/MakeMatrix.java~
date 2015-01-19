@@ -129,7 +129,7 @@ public class MakeMatrix {
 		}
 		StringBuilder strColumn = new StringBuilder();
 		for (char ch : realColomn) {
-			strColumn.append(ch);
+			strColumn.append(ch)
 		}
 		System.out.println(strRow.toString());		
 		System.out.println(strColumn.toString());
