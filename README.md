@@ -25,7 +25,7 @@ To run and compare all implementations, run any one of these commands:
  - ./run_all.sh Examples/5.txt Examples/6.txt
  - ./run_all.sh Examples/7.txt Examples/8.txt
 
-NOTE: Pipe output through ./pretty to make it human readable.
+NOTE: run_all.sh pipes output through ./pretty to make it human readable.
 
 
 
