@@ -20,9 +20,13 @@ The algorithm is published as five different excecutable files programmed in fiv
   NOTE: build.sh requires root rights because it tries to install missing packages.
  
  To run and compare all implementations, run any one of these commands:
+
    ./run_all.sh Examples/1.txt Examples/2.txt
+   
    ./run_all.sh Examples/3.txt Examples/4.txt
+   
    ./run_all.sh Examples/5.txt Examples/6.txt
+   
    ./run_all.sh Examples/7.txt Examples/8.txt
    
   NOTE: Pipe output through ./pretty to make it human readable.
