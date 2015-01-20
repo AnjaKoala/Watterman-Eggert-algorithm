@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-//#include <conio.h>
+/*#include <conio.h>*/
 #include <string.h>
 
 #define MATCH 10
@@ -65,7 +65,7 @@ void printmatrix (struct cell **matrix, int x, int y, char a[], char b[]) {
 	
 	i=0;
     printf("  ");
-          while (a[i]!='\0') {
+          while (i<y-1) {
           putchar(a[i]);
           i++;
           }
@@ -161,7 +161,7 @@ void find_path (char x[], char y[], struct cell **matrix, int m, int n) {
 	
 	/*finding cell with maximum value*/
 	
-	pom=matrix[m][n].value;
+	pom=matrix[m-1][n-1].value;
            for (i = m; i > -1; i--) {
               for (j = n; j > -1; j--) {
                   if (pom<matrix[i][j].value)
@@ -188,10 +188,10 @@ void find_path (char x[], char y[], struct cell **matrix, int m, int n) {
     
           
     char *alignx;
-    alignx = (char *)malloc(z * sizeof(char));      
+    alignx = (char *)malloc(z * sizeof(char*));      
     
 	char *aligny;
-    aligny = (char *)malloc(z * sizeof(char)); 
+    aligny = (char *)malloc(z * sizeof(char*)); 
 	
 	int u;      
     for (u = 0; u <z; u++) {
@@ -203,12 +203,14 @@ void find_path (char x[], char y[], struct cell **matrix, int m, int n) {
     if (imax>jmax) {z=imax;}
     if (imax<jmax) {z=jmax;}
           
-    int imin=0; int jmin=0;
+    int imin=0; 
+    int jmin=0;
     
     int c;
     c=z;
     
     int alignmentlength=0;
+    int score=0;
     
     while (currentcell.value!=0) {
                 
@@ -234,6 +236,7 @@ void find_path (char x[], char y[], struct cell **matrix, int m, int n) {
                 
                 z--;
                 alignmentlength++;
+                score+=currentcell.value;
                 }
           
           imin=i; jmin=j;
@@ -241,34 +244,40 @@ void find_path (char x[], char y[], struct cell **matrix, int m, int n) {
           printf ("\nMinimum value cell:\n");
 	      printf ("V:%d , x:%d, y:%d", matrix[imin][jmin].value, imin,jmin);
 	      printf ("\nAlignment length: %d", alignmentlength);
+	      printf ("\nAlignment score: %d", score);
 	      printf("\n");
           
-          FILE *output;
-          output=fopen("out.txt","a+");
+          
+          
+          /*FILE *output;
+          output=fopen("out.txt","a+");*/
           
           
           printf("\n");
 	      
-	      for (i=(c-alignmentlength); i<c; i++) {
-              fputc(aligny[i],output);
+	      for (i=(c-alignmentlength); i<=c; i++) {
+              /*fputc(aligny[i],output);*/
               putchar(aligny[i]);
               }
          
-         fputs("\n", output);  
+         /*fputs("\n", output);*/  
          printf("\n"); 
               
-         for (i=(c-alignmentlength); i<c; i++) {
-              fputc(alignx[i],output);
+         for (i=(c-alignmentlength); i<=c; i++) {
+              /*fputc(alignx[i],output);*/
               putchar(alignx[i]);
               }   
 	      
-	      fputs("\n \n", output);
+	      /*fputs("\n \n", output);*/
 	      printf("\n");
 	      
-	      fclose(output);
 	      
-	      free(alignx);
+	      
+	      /*fclose(output);*/
+	      
+	      free(alignx);	      
           free(aligny); 
+          
 	
 	
 }
@@ -343,8 +352,9 @@ int main(int argc, char *argv[])
         putchar(c2[i]);}
       
       
-      m=seqcounter;
-      n=seqcounter2;
+      n=seqcounter;
+      m=seqcounter2;
+      
       
       printf("\n  Dimension m=%d n=%d \n", m, n);
       
@@ -387,6 +397,7 @@ int main(int argc, char *argv[])
       /*calculating the path */
       find_path(c1,c2,table1,m,n);
       
+      
       printf("\n \n");
       
       /*creating the matrix H* */  
@@ -396,6 +407,7 @@ int main(int argc, char *argv[])
 		table2[i] = (struct cell*) malloc((n+1)*sizeof(struct cell)); }
       
       if (table2==NULL) {printf ("\n Failed to reserve memory. \n"); return (-1); }
+      
       
       
       for (i = 0; i < m+1; i++) {
@@ -409,11 +421,11 @@ int main(int argc, char *argv[])
       
        
           
-      /*printmatrix (table2, m+1, n+1, c1, c2 );*/    
+      /*printmatrix (table2, m+1, n+1, c1, c2 );*/  
     
       compare(c1,c2,table2,m+1,n+1);
       
-      /*printmatrix (table2, m+1, n+1, c1, c2 ); */
+      /*printmatrix (table2, m+1, n+1, c1, c2 );*/ 
       
       printf("\n \n");
       
