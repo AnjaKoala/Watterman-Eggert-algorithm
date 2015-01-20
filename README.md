@@ -16,8 +16,8 @@ Every one of these programs takes two filenames as arguments:
 Examples/ directory contains sample inputs.
 
 To compile into bin/ directory, run:
-  ./build.sh
- NOTE: build.sh requires root rights because it tries to install missing packages.
+- ./build.sh
+NOTE: build.sh requires root rights because it tries to install missing packages.
 
 To run and compare all implementations, run any one of these commands:
  - ./run_all.sh Examples/1.txt Examples/2.txt
