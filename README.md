@@ -20,10 +20,11 @@ To compile into bin/ directory, run:
 NOTE: build.sh requires root rights because it tries to install missing packages.
 
 To run and compare all implementations, run any one of these commands:
- - ./run_all.sh Examples/1.txt Examples/2.txt
- - ./run_all.sh Examples/3.txt Examples/4.txt
- - ./run_all.sh Examples/5.txt Examples/6.txt
- - ./run_all.sh Examples/7.txt Examples/8.txt
+ - ./run_all.sh Examples/examples_corrected/1.txt Examples/examples_corrected/2.txt
+ - ./run_all.sh Examples/examples_corrected/3.txt Examples/examples_corrected/4.txt
+ - ./run_all.sh Examples/examples_corrected/5.txt Examples/examples_corrected/6.txt
+ - ./run_all.sh Examples/examples_corrected/7.txt Examples/examples_corrected/8.txt
+ - ./run_all.sh Examples/examples_corrected/9.txt Examples/examples_corrected/10.txt
 
 NOTE: run_all.sh pipes output through ./pretty to make it human readable.
 
