@@ -10,7 +10,7 @@ echo ${red}-------------------C Sharp------------------------------
 echo
 mono C\ Sharp/binary.exe $1 $2 | ./pretty
 echo
-echo ${red}--------------------Java--------------------------------${green}
+echo ${green}--------------------Java--------------------------------
 echo
 java -cp bin Main $1 $2 | ./pretty
 echo
