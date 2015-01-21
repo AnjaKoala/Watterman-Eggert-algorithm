@@ -24,5 +24,5 @@ ruby Ruby/project.rb $1 $2 | ./pretty
 echo
 echo ${col5}----------------------C--------------------------------
 echo
-./bin/c $2 $1 | ./pretty
+./bin/c $1 $2 | ./pretty
 echo ${reset}
