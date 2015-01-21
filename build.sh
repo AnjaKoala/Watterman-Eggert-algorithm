@@ -1,6 +1,6 @@
 sudo apt-get update
-sudo apt-get install mono-mcs g++ gcc
-mcs C\ Sharp/WattermanEggert/WattermanEggert/Program.cs -out:bin/csharp.exe
+sudo apt-get install mono-mcs mono-dmcs g++ gcc
+dmcs C\ Sharp/WattermanEggert/WattermanEggert/Program.cs -out:bin/csharp.exe
 javac -d bin/ Java/Bioinformatics/src/*.java
-gcc C/Example.c -o bin/c
+gcc C/final/fin1.c -o bin/c
 g++ pretty.cpp -o pretty
